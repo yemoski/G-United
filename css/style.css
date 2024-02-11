@@ -833,3 +833,30 @@ footer{
         grid-gap: 5px;
     }
 }
+/*profile style*/
+.profile-box{
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #4eb060 ;
+    border-radius: 10px;
+    min-height: 130px;
+    width: 850px;
+    border: 1px solid rgba(0,0,0,0.03);
+
+}
+.dropbtn{
+    position: relative;
+    right: -550px;
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.03);
+
+}
+

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Entry and Price Reporting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+<!--==Fav-icon===============================-->
+<link rel="shortcut icon" href="images/fav-icon.png"/>
+<!--==Using-Font-Awesome=====================-->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<!--==Import-Font-Family======================-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!--==Navigation================================-->
+    <nav class="navigation">
+        <!--logo-------->
+        <a href="index.html" class="logo">
+            <span>G</span>- United
+        </a>
+        <!--menu-btn---->
+        <input type="checkbox" class="menu-btn" id="menu-btn">
+        <label for="menu-btn" class="menu-icon">
+            <span class="nav-icon"></span>
+        </label>
+        <!--menu-------->
+        <ul class="menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#category">Login</a></li>
+            <li><a href="#popular-bundle-pack">Register</a></li>
+            <li><a href="Profile.html">Profile</a></li>
+        </ul>
+        <!--right-nav-(cart-like)-->
+        <div class="right-nav">
+            <!--like----->
+            <a href="#" class="like">
+                <i class="far fa-heart"></i>
+                <span>0</span>
+            </a>
+            <!--cart----->
+            <a href="#" class="cart">
+                <i class="fas fa-shopping-cart"></i>
+                <span>0</span>
+            </a>
+        </div>
+    </nav>
+    <!--nav-end--------------------->
+
+    
+
+    <!--==Search-banner=======================================-->
+    <section id="Profile details">
+        <!--bg--------->
+        <!--text------->
+        <div class="search-banner-text">
+            <h1 class="profiledetails">Hello Philip,</h1>
+                <h3>1267 Alumni Avenue
+            </h3>
+            <h3>Member since August 2020</h3>
+            
+
+        </div>
+      
+    </section>
+    <!--search-banner-end--------------->
+    
+
+
+    <div class="container">
+        <h2>Enter your Item</h2>
+        <form action="submit_item.php" method="post">
+            <label for="itemName">Item Name:</label>
+            <input type="text" id="itemName" name="itemName" required>
+            
+            <label for="province">Province:</label>
+            <select id="province" name="province" required>
+                <option value="">Select Province</option>
+                <option value="AB">Alberta</option>
+                <option value="BC">British Columbia</option>
+                <option value="MB">Manitoba</option>
+                <option value="NB">New Brunswick</option>
+                <option value="NL">Newfoundland and Labrador</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="ON">Ontario</option>
+                <option value="PE">Prince Edward Island</option>
+                <option value="QC">Quebec</option>
+                <option value="SK">Saskatchewan</option>
+                <option value="NT">Northwest Territories</option>
+                <option value="NU">Nunavut</option>
+                <option value="YT">Yukon</option>
+            </select>
+
+            <label for="town">City:</label>
+            <input type="text" id="town" name="town" required>
+            
+            <label for="price">Price:</label>
+            <input type="text" id="price" name="price" required>
+
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*">
+            
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
