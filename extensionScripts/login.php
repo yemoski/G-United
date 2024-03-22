@@ -36,7 +36,9 @@ try{
             $row = $statement -> fetch();
             
             if($row){
-                if($row['password']===$password) {
+
+                if($row['password']===md5($password)) {
+
                     $getsql = "SELECT id, firstname, usertype FROM users WHERE emailAddress = ?";
                     $dbstatement = $pdo -> prepare($getsql);
                     $dbstatement -> execute([$emailAddress]);

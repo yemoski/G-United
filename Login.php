@@ -75,36 +75,10 @@
 </head>
 
 <body>
-    <nav class="navigation">
-        <a href="index.php" class="logo">
-            <span>G</span>-United
-        </a>
-        
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon">
-            <span class="nav-icon"></span>
-        </label>
 
-        <ul class="menu">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="Login.php" class="active">Login</a></li>
-            <li><a href="Register.php">Register</a></li>
-            <li><a href="Profile.php">Profile</a></li>
-            <li><a href="Logout.php">Logout</a></li>
-        </ul>
+    <?php include 'navbar.php'; ?>
 
-        <div class="right-nav">
-            <a href="#" class="like">
-                <i class="far fa-heart"></i>
-                <span>0</span>
-            </a>
 
-            <a href="#" class="cart">
-                <i class="fas fa-shopping-cart"></i>
-                <span>0</span>
-            </a>
-        </div>
-    </nav>
 
     <section id="login">
         <h3>Welcome Back!</h3>
