@@ -20,7 +20,7 @@
     <!--==Navigation================================-->
     <nav class="navigation">
         <!--logo-------->
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
             <span>G</span> - United
         </a>
         <!--menu-btn---->
@@ -30,10 +30,11 @@
         </label>
         <!--menu-------->
         <ul class="menu">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="Login.html">Login</a></li>
-            <li><a href="Register.html">Register</a></li>
-            <li><a href="Profile.html">Profile</a></li>
+            <li><a href="index.php" class="active">Home</a></li>
+            <li><a href="Login.php">Login</a></li>
+            <li><a href="Register.php">Register</a></li>
+            <li><a href="Profile.php">Profile</a></li>
+            <li><a href="Logout.php">Logout</a></li>
         </ul>
         <!--right-nav-(cart-like)-->
         <div class="right-nav">
@@ -61,7 +62,7 @@
             <h1>Track your grocery prices in real time</h1>
             <strong>Try for Free!</strong>
             <!--search-box------>
-            <form action="ItemDashboard.html" method="get" class="search-box">
+            <form action="ItemDashboard.php" method="get" class="search-box">
                 <!--icon------>
                 <i class="fas fa-search"></i>
                 <!--input----->

@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Item Entry and Price Reporting</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <style>
         body {
             font-family: Arial, sans-serif;
         }
         .container {
             max-width: 600px;
-            margin: 0 auto;
+            margin: 30px auto;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #f9f9f9;
+            min-height: 500px;
         }
         label {
             display: block;
@@ -40,8 +42,26 @@
         button:hover {
             background-color: #45a049;
         }
+
+        .container form {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .container form #price {
+            width: 200px;
+            padding: 3px;
+            margin: 5px;
+        }
+
+        .container form button {
+            margin: auto;
+            width: 300px;
+            margin-top: 20px;
+            border-radius: 30px;
+        }
     </style>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
 <!--==Fav-icon===============================-->
 <link rel="shortcut icon" href="images/fav-icon.png"/>
 <!--==Using-Font-Awesome=====================-->
@@ -50,12 +70,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<?php
+    include "extensionScripts/createItem.php";
+    include "extensionScripts/profile.php";
+?>
+
 </head>
 <body>
     <!--==Navigation================================-->
     <nav class="navigation">
         <!--logo-------->
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
             <span>G</span>- United
         </a>
         <!--menu-btn---->
@@ -65,10 +91,11 @@
         </label>
         <!--menu-------->
         <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Login.html">Login</a></li>
-            <li><a href="Register.html">Register</a></li>
-            <li><a href="Profile.html" class="active">Profile</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="Login.php">Login</a></li>
+            <li><a href="Register.php">Register</a></li>
+            <li><a href="Profile.php" class="active">Profile</a></li>
+            <li><a href="Logout.php">Logout</a></li>
         </ul>
         <!--right-nav-(cart-like)-->
         <div class="right-nav">
@@ -86,32 +113,44 @@
     </nav>
     <!--nav-end--------------------->
 
-    
-
-    <!--==Search-banner=======================================-->
-    <section id="Profile details">
-        <!--bg--------->
-        <!--text------->
-        <div class="search-banner-text">
-            <h1 class="profiledetails">Hello Philip,</h1>
-                <h3>1267 Alumni Avenue
-            </h3>
-            <h3>Member since August 2020</h3>
-            
-
-        </div>
-      
-    </section>
-    <!--search-banner-end--------------->
-    
-
-
     <div class="container">
         <h2>Enter your Item</h2>
-        <form action="submit_item.php" method="post">
+        <form method="post" enctype="multipart/form-data">
             <label for="itemName">Item Name:</label>
             <input type="text" id="itemName" name="itemName" required>
-            
+            <?php
+                if (!empty($itemName_err)) {
+                    echo "<p id=\"itemNameError\"style=\"color: red;\">$itemName_err</p>";
+                }
+            ?>
+
+            <?php
+                if (!empty($category_err)) {
+                    echo "<p id=\"categoryError\"style=\"color: red;\">$category_err</p>";
+                }
+            ?>
+
+            <label for="category">Category:</label>
+            <select id="itemCategory" name="category" required>
+                <option value="">Select Category</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Canned Goods">Canned Goods</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Meat">Meat</option>
+                <option value="Fish & Seafood">Fish & Seafood</option>
+                <option value="Deli">Deli</option>
+                <option value="Condiments & Spices">Condiments & Spices</option>
+                <option value="Snacks">Snacks</option>
+                <option value="Baked Goods">Baked Goods</option>
+                <option value="Frozen Foods">Frozen Foods</option>
+                <option value="Personal Care">Personal Care</option>
+                <option value="Household & Cleaning Supplies">Household & Cleaning Supplies</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Baby Items">Baby Items</option>
+                <option value="Pet Care">Pet Care</option>
+            </select>
+
             <label for="province">Province:</label>
             <select id="province" name="province" required>
                 <option value="">Select Province</option>
@@ -129,17 +168,36 @@
                 <option value="NU">Nunavut</option>
                 <option value="YT">Yukon</option>
             </select>
+            <?php
+                if (!empty($province_err)) {
+                    echo "<p id=\"provinceError\"style=\"color: red;\">$province_err</p>";
+                }
+            ?>
 
             <label for="town">City:</label>
             <input type="text" id="town" name="town" required>
-            
-            <label for="price">Price:</label>
-            <input type="text" id="price" name="price" required>
+            <?php
+                if (!empty($town_err)) {
+                    echo "<p id=\"townError\"style=\"color: red;\">$town_err</p>";
+                }
+            ?>
+
+            <label for="price">Price ($):</label>
+            <input id="price" type="number" min="0.00" max="2000.00" step="0.01" id="price" name="price" required>
+            <?php
+                if (!empty($price_err)) {
+                    echo "<p id=\"priceError\"style=\"color: red;\">$price_err</p>";
+                }
+            ?>
 
             <label for="image">Image:</label>
             <input type="file" id="image" name="image" accept="image/*">
-            
-            
+            <?php
+                if (!empty($image_err)) {
+                    echo "<p id=\"imageError\"style=\"color: red;\">$image_err</p>";
+                }
+            ?>
+
             <button type="submit">Submit</button>
         </form>
     </div>
