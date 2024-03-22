@@ -69,39 +69,13 @@
 
 
 </style>
+<?php
+    include "extensionScripts/login.php";
+?>
 </head>
 
-
 <body>
-    <nav class="navigation">
-        <a href="index.html" class="logo">
-            <span>G</span>-United
-        </a>
-        
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon">
-            <span class="nav-icon"></span>
-        </label>
-
-        <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Login.html" class="active">Login</a></li>
-            <li><a href="Register.html">Register</a></li>
-            <li><a href="Profile.html">Profile</a></li>
-        </ul>
-
-        <div class="right-nav">
-            <a href="#" class="like">
-                <i class="far fa-heart"></i>
-                <span>0</span>
-            </a>
-
-            <a href="#" class="cart">
-                <i class="fas fa-shopping-cart"></i>
-                <span>0</span>
-            </a>
-        </div>
-    </nav>
+    <?php include 'navbar.php'; ?>
 
     <section id="login">
         <h3>Welcome Back!</h3>
@@ -112,14 +86,24 @@
                         <span>G</span>-United
                     </div>
                 </legend>
-                <form>
+                <form method="post">
                     <h3>Login</h3>
                     <p>
                         <input type="text" id="loginParam" placeholder="Email address" name="emailAddress" required>     
                     </p>
+                    <?php
+                        if (!empty($email_err)) {
+                            echo "<p id=\"emailErrorMessage\"style=\"color: red;\">$email_err</p>";
+                        }
+                    ?>
                     <p>
                         <input type="password" id="password" placeholder="Password" name="password" required>     
                     </p>
+                    <?php
+                        if (!empty($password_err)) {
+                            echo "<p id=\"emailErrorMessage\"style=\"color: red;\">$password_err</p>";
+                        }
+                    ?>
                     <div>
                         <button type="submit">Sign In</button>
                     </div>

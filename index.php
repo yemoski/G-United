@@ -17,39 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!--==Navigation================================-->
-    <nav class="navigation">
-        <!--logo-------->
-        <a href="index.html" class="logo">
-            <span>G</span> - United
-        </a>
-        <!--menu-btn---->
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon">
-            <span class="nav-icon"></span>
-        </label>
-        <!--menu-------->
-        <ul class="menu">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="Login.html">Login</a></li>
-            <li><a href="Register.html">Register</a></li>
-            <li><a href="Profile.html">Profile</a></li>
-        </ul>
-        <!--right-nav-(cart-like)-->
-        <div class="right-nav">
-            <!--like----->
-            <a href="#" class="like">
-                <i class="far fa-heart"></i>
-                <span>0</span>
-            </a>
-            <!--cart----->
-            <a href="#" class="cart">
-                <i class="fas fa-shopping-cart"></i>
-                <span>0</span>
-            </a>
-        </div>
-    </nav>
-    <!--nav-end--------------------->
+    <?php include 'navbar.php'; ?>
 
     <!--==Search-banner=======================================-->
     <section id="search-banner">
@@ -61,7 +29,7 @@
             <h1>Track your grocery prices in real time</h1>
             <strong>Try for Free!</strong>
             <!--search-box------>
-            <form action="ItemDashboard.html" method="get" class="search-box">
+            <form action="ItemDashboard.php" method="get" class="search-box">
                 <!--icon------>
                 <i class="fas fa-search"></i>
                 <!--input----->
