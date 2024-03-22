@@ -93,7 +93,9 @@
 ?>
 </head>
 <body>
+
 <?php include 'navbar.php'; ?>
+
 
     
 
@@ -106,7 +108,9 @@
                 Hello <?php echo getUserName()?>,
             </h1>
             <h3>
+
                 Member since 2020 (to be done) -> read from db
+
             </h3>
         </div>
         <img id=profileImage alt="profile Image" src="<?php echo getProfileImage()?>">

@@ -97,7 +97,9 @@
 </head>
 
 <body>
+
 <?php include 'navbar.php'; ?>
+
     <section id="login">
         <h3>Welcome!</h3>
         <div id="loginContainer">

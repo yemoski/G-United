@@ -87,9 +87,11 @@ try{
         if(empty($email_err) && empty($password_err) && empty($firstName_err) 
         && empty($lastName_err) && empty($usertype_err) && empty($image_err)) {
 
+
             $sql = "INSERT INTO users(firstname, lastname, emailAddress, password, usertype, profileLocation) VALUES (?, ?, ?, ?, ?, ?)";
             $statement = $pdo -> prepare($sql);
             $statement -> execute([$firstname, $lastname, $emailAddress, md5($confirmPassword), $usertype, $profileLocation]);
+
 
             $sql = "SELECT id FROM users WHERE emailAddress = ?";
             $statement = $pdo -> prepare($sql);

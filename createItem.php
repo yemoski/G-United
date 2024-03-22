@@ -78,7 +78,9 @@
 
 </head>
 <body>
+
 <?php include 'navbar.php'; ?>
+
 
     <div class="container">
         <h2>Enter your Item</h2>

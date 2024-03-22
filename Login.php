@@ -75,7 +75,10 @@
 </head>
 
 <body>
+
     <?php include 'navbar.php'; ?>
+
+
 
     <section id="login">
         <h3>Welcome Back!</h3>
