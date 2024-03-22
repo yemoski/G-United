@@ -66,7 +66,7 @@
         width: fit-content;
         padding: 20px;
         border: 3px solid green;
-        margin: 0px 20px;
+        margin: auto;
     }
 
     .profileInfo {
@@ -139,7 +139,7 @@
                 Hello <?php echo getUserName()?>,
             </h1>
             <h3>
-                Member since <?php echo getUserName()?>
+                Member since 2020
             </h3>
         </div>
         <img id=profileImage alt="profile Image" src="<?php echo getProfileImage()?>">
