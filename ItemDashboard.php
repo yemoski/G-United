@@ -142,11 +142,14 @@
     }
     
 </style>
+<?php
+    session_start();
+?>
 </head>
 
 <body>
     <nav class="navigation">
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
             <span>G</span>-United
         </a>
         
@@ -156,10 +159,11 @@
         </label>
 
         <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Login.html">Login</a></li>
-            <li><a href="Register.html">Register</a></li>
-            <li><a href="Profile.html">Profile</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="Login.php">Login</a></li>
+            <li><a href="Register.php">Register</a></li>
+            <li><a href="Profile.php">Profile</a></li>
+            <li><a href="Logout.php">Logout</a></li>
         </ul>
 
         <div class="right-nav">
@@ -201,7 +205,9 @@
             </div>
     
             <div id="products-container">
-    
+            <?php
+                include "extensionScripts/getItems.php";
+            ?>
             </div>
         </section>
     </div>
@@ -213,6 +219,6 @@
         searchInput.value = searchParam;
     </script>
    
-    <script src="scripts/Dashboard.js"></script>
+    
 </body>
 </html>

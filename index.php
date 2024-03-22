@@ -5,32 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--==Title==================================-->
 <title>G-United Store</title>
-
-<style>
-    /* CSS styles */
-    body {
-        background-color: white; 
-    }
-
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    
-    }
-
-    .dropdown-content {
-        display: none;
-        position: relative;
-        background-color: white;
-        min-width: 1000px;
-        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-</style>
 <!--==Stylesheet=============================-->
 <link rel="stylesheet" type="text/css" href="css/style.css"/>
 <!--==Fav-icon===============================-->
@@ -46,8 +20,8 @@
     <!--==Navigation================================-->
     <nav class="navigation">
         <!--logo-------->
-        <a href="index.html" class="logo">
-            <span>G</span>- United
+        <a href="index.php" class="logo">
+            <span>G</span> - United
         </a>
         <!--menu-btn---->
         <input type="checkbox" class="menu-btn" id="menu-btn">
@@ -56,10 +30,11 @@
         </label>
         <!--menu-------->
         <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Login.html">Login</a></li>
-            <li><a href="Register.html">Register</a></li>
-            <li><a href="Profile.html" class="active">Profile</a></li>
+            <li><a href="index.php" class="active">Home</a></li>
+            <li><a href="Login.php">Login</a></li>
+            <li><a href="Register.php">Register</a></li>
+            <li><a href="Profile.php">Profile</a></li>
+            <li><a href="Logout.php">Logout</a></li>
         </ul>
         <!--right-nav-(cart-like)-->
         <div class="right-nav">
@@ -77,21 +52,25 @@
     </nav>
     <!--nav-end--------------------->
 
-    
-
     <!--==Search-banner=======================================-->
-    <section id="Profile details">
+    <section id="search-banner">
         <!--bg--------->
+        <img alt="bg" class="bg-1" src="images/bg-1.png">
+        <img alt="bg-2" class="bg-2" src="images/bg-2.png">
         <!--text------->
         <div class="search-banner-text">
-            <h1 class="profiledetails">Hello Philip,</h1>
-                <h3>1267 Alumni Avenue
-            </h3>
-            <h3>Member since August 2020</h3>
-            
-           
+            <h1>Track your grocery prices in real time</h1>
+            <strong>Try for Free!</strong>
+            <!--search-box------>
+            <form action="ItemDashboard.php" method="get" class="search-box">
+                <!--icon------>
+                <i class="fas fa-search"></i>
+                <!--input----->
+                <input type="text" class="search-input" placeholder="Search your daily groceries" name="search" required>
+                <!--btn------->
+                <input type="submit" class="search-btn" value="Search">
+            </form>
         </div>
-      
     </section>
     <!--search-banner-end--------------->
     
@@ -99,68 +78,152 @@
     <section id="category">
         <!--heading---------------->
         <div class="category-heading">
-            <h2>Account Details</h2>
+            <h2>Category</h2>
+            <span>All</span>
         </div>
         <!--box-container---------->
         <div class="category-container">
-          
             <!--box---------------->
-            <ul>
-             
-        <!--box---------------->
-        <li>
-          <a href="#" class="profile-box">
-            <span>Saved Products</span>
-            </a>
-
-        </li>
-           
-          <li>
-                    <!--box---------------->
-            <a href="createItem.html" class="profile-box">
-                <span>Create an Item</span>
+            <a href="#" class="category-box">
+                <img alt="Fish" src="images/fish.png">
+                <span>Fish & Meat</span>
             </a>
             <!--box---------------->
-
-        </li>
-         
-
-          <li>
-            <a href="#" class="profile-box">
-                <span>Account settings</span>
+            <a href="#" class="category-box">
+                <img alt="Fish" src="images/Vegetables.png">
+                <span>Vegatbles</span>
             </a>
             <!--box---------------->
-
-        </li>
-         
-
-           
-
-          
-
-           <li>  <a href="#" class="profile-box">
-            <span>Invite Friends</span>
-        </a>
-     </li> 
-          </ul>
-           
-            
+            <a href="#" class="category-box">
+                <img alt="Fish" src="images/medicine.png">
+                <span>Medicine</span>
+            </a>
+            <!--box---------------->
+            <a href="#" class="category-box">
+                <img alt="Fish" src="images/baby.png">
+                <span>Baby</span>
+            </a>
+            <!--box---------------->
+            <a href="#" class="category-box">
+                <img alt="Fish" src="images/office.png">
+                <span>Office</span>
+            </a>
+            <!--box---------------->
+            <a href="#" class="category-box">
+                <img alt="Fish" src="images/beauty.png">
+                <span>Beauty</span>
+            </a>
+            <!--box---------------->
+            <a href="#" class="category-box">
+                <img alt="Fish" src="images/Gardening.png">
+                <span>Gardening</span>
+            </a>
         </div>
         
     </section>
     <!--category-end----------------------------------->
-
-
-    <div class="dropdown">
-        <button class="dropbtn">Want to know About Us ?</button>
-        <div class="dropdown-content">
-            <p>Welcome to G-United, your trusted partner in navigating the world of grocery shopping. At G-United, we understand the challenges consumers face when it comes to finding the best deals on everyday essentials. That's why we've dedicated ourselves to revolutionizing the way people track and compare grocery prices.</p>
-            <p>With our innovative platform, shoppers can effortlessly monitor prices across various stores, ensuring they never miss out on savings. Whether you're a budget-conscious family or a savvy shopper looking to optimize your grocery spending, G-United empowers you to make informed decisions that stretch your dollars further.</p>
-            <p>Our team is committed to providing accurate, up-to-date information and intuitive tools that simplify the shopping experience. By harnessing the power of data analytics and technology, we aim to democratize access to pricing information, leveling the playing field for all consumers.</p>
-            <p>Join the G-United community today and embark on a journey towards smarter shopping. Together, let's unlock a world of savings and convenience, one grocery trip at a time.</p>
+    <!--==Products====================================-->
+    <section id="popular-product">
+        <!--heading----------->
+        <div class="product-heading">
+            <h3>Popular Product</h3>
+            <span>All</span>
         </div>
-    </div>
-   
+        <!--box-container------>
+        <div class="product-container">
+            <!--box---------->
+            <div class="product-box">
+                <img alt="apple" src="images/apple.png">
+                <strong>Apple</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">2$</span>
+                <!--cart-btn------->
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add Cart
+                </a>
+                <!--like-btn------->
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <!--box---------->
+            <div class="product-box">
+                <img alt="apple" src="images/chili.png">
+                <strong>Chili</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">3$</span>
+                <!--cart-btn------->
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add Cart
+                </a>
+                <!--like-btn------->
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <!--box---------->
+            <div class="product-box">
+                <img alt="apple" src="images/onion.png">
+                <strong>Onion</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">1$</span>
+                <!--cart-btn------->
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add Cart
+                </a>
+                <!--like-btn------->
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <!--box---------->
+            <div class="product-box">
+                <img alt="apple" src="images/patato.png">
+                <strong>Patato</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">2.2$</span>
+                <!--cart-btn------->
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add Cart
+                </a>
+                <!--like-btn------->
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <!--box---------->
+            <div class="product-box">
+                <img alt="apple" src="images/garlic.png">
+                <strong>Garlic</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">3$</span>
+                <!--cart-btn------->
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add Cart
+                </a>
+                <!--like-btn------->
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+            <!--box---------->
+            <div class="product-box">
+                <img alt="apple" src="images/tamato.png">
+                <strong>Tamato</strong>
+                <span class="quantity">1 KG</span>
+                <span class="price">1.4$</span>
+                <!--cart-btn------->
+                <a href="#" class="cart-btn">
+                    <i class="fas fa-shopping-bag"></i> Add Cart
+                </a>
+                <!--like-btn------->
+                <a href="#" class="like-btn">
+                    <i class="far fa-heart"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!--popular-product-end--------------------->
     
     <!--==Clients===============================================-->
     <section id="clients">

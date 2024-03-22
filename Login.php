@@ -69,12 +69,14 @@
 
 
 </style>
+<?php
+    include "extensionScripts/login.php";
+?>
 </head>
-
 
 <body>
     <nav class="navigation">
-        <a href="index.html" class="logo">
+        <a href="index.php" class="logo">
             <span>G</span>-United
         </a>
         
@@ -84,10 +86,11 @@
         </label>
 
         <ul class="menu">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="Login.html" class="active">Login</a></li>
-            <li><a href="Register.html">Register</a></li>
-            <li><a href="Profile.html">Profile</a></li>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="Login.php" class="active">Login</a></li>
+            <li><a href="Register.php">Register</a></li>
+            <li><a href="Profile.php">Profile</a></li>
+            <li><a href="Logout.php">Logout</a></li>
         </ul>
 
         <div class="right-nav">
@@ -112,14 +115,24 @@
                         <span>G</span>-United
                     </div>
                 </legend>
-                <form>
+                <form method="post">
                     <h3>Login</h3>
                     <p>
                         <input type="text" id="loginParam" placeholder="Email address" name="emailAddress" required>     
                     </p>
+                    <?php
+                        if (!empty($email_err)) {
+                            echo "<p id=\"emailErrorMessage\"style=\"color: red;\">$email_err</p>";
+                        }
+                    ?>
                     <p>
                         <input type="password" id="password" placeholder="Password" name="password" required>     
                     </p>
+                    <?php
+                        if (!empty($password_err)) {
+                            echo "<p id=\"emailErrorMessage\"style=\"color: red;\">$password_err</p>";
+                        }
+                    ?>
                     <div>
                         <button type="submit">Sign In</button>
                     </div>
