@@ -109,10 +109,11 @@
                         <span>G</span>-United
                     </div>
                 </legend>
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" onsubmit= "return validateForm()" novalidate >
                     <h2>Create Your Account</h2>
                     <p>
-                        <input type="text" id="firstname" placeholder="First Name" value="<?php echo $firstname?>" name="firstname" required>     
+                        <input type="text" id="firstname" placeholder="First Name" value="<?php echo $firstname?>" name="firstname" required>
+                           
                     </p>
                     <?php
                         if (!empty($firstName_err)) {
@@ -237,6 +238,49 @@
             });
         });
 
+        function validateForm() {
+            var firstname = document.getElementById("firstname").value;
+            var lastname = document.getElementById("lastname").value;
+            var email = document.getElementById("loginParam").value;
+            var password = document.getElementById("passwordEntry").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var emailRegex = /(.+)@([^\.].*)\.([a-z]{2,})/;
+            var passReg = /^[a-zA-Z]\w{7,16}$/;
+            
+            
+            
+            if (firstname == "") {
+                alert("First name is required");
+                return false;
+            } 
+
+            if (lastname == "") {
+               alert( "Last name is required");
+                return false;
+            } 
+
+           
+            if (!emailRegex.test(email)) {
+               alert("Invalid Email format");
+                return false;
+            } 
+
+           
+            if (password < 8) {
+                alert("Password must be at least 8 characters long");
+                return false;
+            } 
+
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return false;
+            } 
+
+            return true;
+
+        }
+    
     </script>
 </body>
 </html>

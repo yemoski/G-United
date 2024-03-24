@@ -80,11 +80,47 @@
 <body>
 
 <?php include 'navbar.php'; ?>
+<script>
+function validateForm() {
+    var itemName = document.getElementById("itemName").value;
+    var category = document.getElementById("itemCategory").value;
+    var province = document.getElementById("province").value;
+    var town = document.getElementById("town").value;
+    var price = document.getElementById("price").value;
+    var image = document.getElementById("image").value;
+
+    if (itemName == "") {
+        alert("Item Name must be filled out");
+        return false;
+    }
+    if (category == "") {
+        alert("Category must be selected");
+        return false;
+    }
+    if (province == "") {
+        alert("Province must be selected");
+        return false;
+    }
+    if (town == "") {
+        alert("City must be filled out");
+        return false;
+    }
+    if (price == "") {
+        alert("Price must be filled out");
+        return false;
+    }
+    if (image == "") {
+        alert("Image must be selected");
+        return false;
+    }
+    return true;
+}
 
 
+</script>
     <div class="container">
         <h2>Enter your Item</h2>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()" novalidate>
             <label for="itemName">Item Name:</label>
             <input type="text" id="itemName" name="itemName" required>
             <?php
