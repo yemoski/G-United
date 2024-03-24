@@ -73,50 +73,48 @@
 
 <?php
     include "extensionScripts/createItem.php";
-    include "extensionScripts/profile.php";
 ?>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <?php include 'navbar.php'; ?>
 <script>
-function validateForm() {
-    var itemName = document.getElementById("itemName").value;
-    var category = document.getElementById("itemCategory").value;
-    var province = document.getElementById("province").value;
-    var town = document.getElementById("town").value;
-    var price = document.getElementById("price").value;
-    var image = document.getElementById("image").value;
+    function validateForm() {
+        var itemName = document.getElementById("itemName").value;
+        var category = document.getElementById("itemCategory").value;
+        var province = document.getElementById("province").value;
+        var town = document.getElementById("town").value;
+        var price = document.getElementById("price").value;
+        var image = document.getElementById("image").value;
 
-    if (itemName == "") {
-        alert("Item Name must be filled out");
-        return false;
+        if (itemName == "") {
+            alert("Item Name must be filled out");
+            return false;
+        }
+        if (category == "") {
+            alert("Category must be selected");
+            return false;
+        }
+        if (province == "") {
+            alert("Province must be selected");
+            return false;
+        }
+        if (town == "") {
+            alert("City must be filled out");
+            return false;
+        }
+        if (price == "") {
+            alert("Price must be filled out");
+            return false;
+        }
+        if (image == "") {
+            alert("Image must be selected");
+            return false;
+        }
+        return true;
     }
-    if (category == "") {
-        alert("Category must be selected");
-        return false;
-    }
-    if (province == "") {
-        alert("Province must be selected");
-        return false;
-    }
-    if (town == "") {
-        alert("City must be filled out");
-        return false;
-    }
-    if (price == "") {
-        alert("Price must be filled out");
-        return false;
-    }
-    if (image == "") {
-        alert("Image must be selected");
-        return false;
-    }
-    return true;
-}
-
-
 </script>
     <div class="container">
         <h2>Enter your Item</h2>
@@ -137,23 +135,19 @@ function validateForm() {
 
             <label for="category">Category:</label>
             <select id="itemCategory" name="category" required>
-                <option value="">Select Category</option>
-                <option value="Fruits">Fruits</option>
-                <option value="Vegetables">Vegetables</option>
-                <option value="Canned Goods">Canned Goods</option>
-                <option value="Dairy">Dairy</option>
-                <option value="Meat">Meat</option>
-                <option value="Fish & Seafood">Fish & Seafood</option>
-                <option value="Deli">Deli</option>
-                <option value="Condiments & Spices">Condiments & Spices</option>
-                <option value="Snacks">Snacks</option>
-                <option value="Baked Goods">Baked Goods</option>
-                <option value="Frozen Foods">Frozen Foods</option>
-                <option value="Personal Care">Personal Care</option>
-                <option value="Household & Cleaning Supplies">Household & Cleaning Supplies</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Baby Items">Baby Items</option>
-                <option value="Pet Care">Pet Care</option>
+                <?php
+                    getCategories();
+                ?>
+            </select>
+
+            <label for="itemType">Item Type:</label>
+            <select id="itemType" name="type" required>
+                
+            </select>
+
+            <label for="item">Item:</label>
+            <select id="item" name="item" required>
+                
             </select>
 
             <label for="province">Province:</label>
@@ -186,6 +180,14 @@ function validateForm() {
                     echo "<p id=\"townError\"style=\"color: red;\">$town_err</p>";
                 }
             ?>
+            
+            <div id="storeList">
+                <label for="store">Grocery Store:</label>
+                <input type="text" id="store" name="store" list="searchOptions" placeholder="Enter Store Name" required>
+                <datalist id="searchOptions">
+                
+                </datalist>
+            </div>
 
             <label for="price">Price ($):</label>
             <input id="price" type="number" min="0.00" max="2000.00" step="0.01" id="price" name="price" required>
@@ -206,5 +208,94 @@ function validateForm() {
             <button type="submit">Submit</button>
         </form>
     </div>
+
+<script>
+    $(document).ready(function() {
+        $('#itemCategory').change(function() {
+            var selectedCategory = $(this).val(); 
+
+            if (!selectedCategory) {
+                console.error('No category selected.');
+                $('#itemType').empty();
+                $('#item').empty();
+                return; 
+            }
+
+            $('#itemType').empty().append('<option value="">Select Item Type</option>');
+            $('#item').empty();
+
+            if (selectedCategory ) {
+                $.ajax({
+                    url: "scripts/phpJSAjax.php", 
+                    type: 'GET',
+                    data: { category: selectedCategory },
+                    success: function(response) {
+                        if (response) {
+                            $('#itemType').append(response);
+                        } else {
+                            $('#itemType').append('<option value="">No subcategories available</option>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching subcategories:', error);
+                    }
+                });
+            }
+        });
+
+        $('#itemType').change(function() {
+            var itemCategory = $('#itemCategory').val(); 
+            var itemType = $(this).val(); 
+
+            if (!itemCategory || !itemType) {
+                console.error('No category selected.');
+                $('#item').empty();
+                return; 
+            }
+
+            $('#item').empty().append('<option value="">Select Item</option>');
+
+            if (itemType && itemCategory) {
+                $.ajax({
+                    url: "scripts/phpJSAjax.php", 
+                    type: 'GET',
+                    data: { category: itemCategory, itemType: itemType },
+                    success: function(response) {
+                        if (response) {
+                            $('#item').append(response);
+                        } else {
+                            $('#item').append('<option value="">No items available</option>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching items:', error);
+                    }
+                });
+            }
+        });
+
+        $('#store').on("input", function() {
+            var storeName = $('#store').val().trim(); 
+        
+            $('#searchOptions').empty();
+
+            if (storeName != "") {
+                $.ajax({
+                    url: "scripts/phpJSAjax.php", 
+                    type: 'GET',
+                    data: { storeName: storeName },
+                    success: function(response) {
+                        if (response) {
+                            $('#searchOptions').append(response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching autocomplete options:', error);
+                    }
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

@@ -823,10 +823,9 @@ footer{
     justify-content: center;
     background-color: #4eb060 ;
     border-radius: 10px;
-    min-height: 130px;
-    width: 850px;
+    min-height: 20px;
+    width: 100px;
     border: 1px solid rgba(0,0,0,0.03);
-
 }
 .dropbtn{
     position: relative;

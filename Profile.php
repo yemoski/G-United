@@ -15,9 +15,13 @@
         background-color: white; 
     }
 
+    #doubleColumn {
+        display: flex;
+    }
+
     .dropdown {
         position: relative;
-    
+        margin-bottom: 20px;
     }
 
     #profileImage {
@@ -65,7 +69,6 @@
         gap: 40px;
         width: fit-content;
         padding: 20px;
-        border: 3px solid green;
         margin: auto;
     }
 
@@ -77,8 +80,66 @@
         width: fit-content;
     }
 
-</style>
+    #actions {
+        width: 30%;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 0px;
+        border-right: 1px solid lightgray;
+    }
 
+    .category-heading {
+        margin: auto; 
+    }
+
+    #category-box {
+        border: 3px solid #4eb060;
+        width: 80%;
+        height: 100%;
+        border-radius: 20px;
+    }
+
+    #category-box ul {
+        align-items: center;
+        margin: auto;
+        width: 100%;
+        padding: 30px;
+    }
+
+    #category-box li {
+        border-bottom: 0.25px solid lightgray;
+        width: 100%;
+        padding: 40px 0px;
+        text-align: center;
+        &:hover {
+            background-color: whitesmoke;
+        }
+    }
+
+    #category-box li a {
+        display: flex;
+        justify-content: center;
+        margin: 0px 15px;
+        color: #3b3b3b;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        transition: all ease 0.3s;
+
+        &:hover {
+            color: #4eb060;
+        }
+    }
+
+    #profileContent {
+        border-top: 1px solid lightgray;
+        border-bottom: 1px solid lightgray;
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+</style>
 <!--==Fav-icon===============================-->
 <link rel="shortcut icon" href="images/fav-icon.png"/>
 <!--==Using-Font-Awesome=====================-->
@@ -93,44 +154,13 @@
 ?>
 </head>
 <body>
-
-<?php include 'navbar.php'; ?>
-
-
-    
-
-    <!--==Search-banner=======================================-->
-    <section id="Profiledetails">
-        <!--bg--------->
-        <!--text------->
-        <div class="profileInfo search-banner-text">
-            <h1 class="profiledetails">
-                Hello <?php echo getUserName()?>,
-            </h1>
-            <h3>
-
-                Member since 2020 (to be done) -> read from db
-
-            </h3>
-        </div>
-        <img id=profileImage alt="profile Image" src="<?php echo getProfileImage()?>">
-      
-    </section>
-    <!--search-banner-end--------------->
-    
-    <!--==category=========================================-->
-    <section id="category">
-        <!--heading---------------->
-        <div class="category-heading">
-            <h2>Account Details</h2>
-        </div>
-        <!--box-container---------->
-        <div class="category-container">
-          
-            <!--box---------------->
-            <ul style="margin: auto;">
+    <?php include 'navbar.php'; ?>
+    <div id="profileContent">
+        <section id="actions">
+            <div id="category-box">
+            <ul>
                 <li>
-                    <a href="#" class="profile-box">
+                    <a href="#">
                         <span>Your Tracked Items</span>
                     </a>           
                 </li>  
@@ -138,37 +168,46 @@
                     if(isset($_SESSION["loggedin"]) && isset($_SESSION["usertype"]) && strcasecmp("Admin", $_SESSION["usertype"]) == 0) {
                         echo "
                         <li>
-                            <a href=\"createItem.php\" class=\"profile-box\">
+                            <a href=\"createItem.php\">
                                 <span>Create an Item</span>
                             </a>
                         </li>";
                     }
                 ?>
                 <li>
-                    <a href="#" class="profile-box">
+                    <a href="#">
                         <span>Account settings</span>
                     </a>
-                    <!--box---------------->
-
                 </li>
                 <li>
-                    <a href="#" class="profile-box">
-                        <span>Your Messages</span>
+                    <a href="#">
+                        <span>Your Comments</span>
                     </a>
-                    <!--box---------------->
                 </li>
                 <li>  
-                    <a href="#" class="profile-box">
+                    <a href="#">
                         <span>Invite Friends</span>
                     </a>
                 </li> 
             </ul>  
-        </div>
-        
-    </section>
-    <!--category-end----------------------------------->
+            </div>
+        </section>
 
+        <section id="Profiledetails">
+                <div class="profileInfo search-banner-text">
+                    <h1 class="profiledetails">
+                        Hello <?php echo getUserName()?>,
+                    </h1>
+                    <h3>
 
+                        Member since <?php echo getProfileDetails()[1]?>
+
+                    </h3>
+                </div>
+                <img id=profileImage alt="profile Image" src="<?php echo getProfileDetails()[0]?>">
+        </section>
+    </div>
+    
     <div class="dropdown">
         <button class="dropbtn">Want to know About Us ?</button>
         <div class="dropdown-content">
@@ -178,90 +217,7 @@
             <p>Join the G-United community today and embark on a journey towards smarter shopping. Together, let's unlock a world of savings and convenience, one grocery trip at a time.</p>
         </div>
     </div>
-   
-    
-    <!--==Clients===============================================-->
-    <section id="clients">
-        <!--heading---------------->
-        <div class="client-heading">
-            <h3>What Our Client's Say</h3>
-        </div>
-        <!--box-container---------->
-        <div class="client-box-container">
-            <!--box------------->
-            <div class="client-box">
-                <!--==profile===-->
-                <div class="client-profile">
-                    <!--img--->
-                    <img alt="client" src="images/client-1.jpg">
-                    <!--text-->
-                    <div class="profile-text">
-                        <strong>Osimeh</strong>
-                        <span>CEO</span>
-                    </div>
-                </div>
-                <!--==Rating======-->
-                <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <!--==comments===-->
-                <p>E goes well!!</p>
-            </div>
-            <!--box------------->
-            <div class="client-box">
-                <!--==profile===-->
-                <div class="client-profile">
-                    <!--img--->
-                    <img alt="client" src="images/client-2.jpg">
-                    <!--text-->
-                    <div class="profile-text">
-                        <strong>Iwobi</strong>
-                        <span>Software Developer</span>
-                    </div>
-                </div>
-                <!--==Rating======-->
-                <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <!--==comments===-->
-                <p>Amapiano!</p>
-            </div>
-            <!--box------------->
-            <div class="client-box">
-                <!--==profile===-->
-                <div class="client-profile">
-                    <!--img--->
-                    <img alt="client" src="images/client-3.jpg">
-                    <!--text-->
-                    <div class="profile-text">
-                        <strong>Iheanacho</strong>
-                        <span>Senior Man</span>
-                    </div>
-                </div>
-                <!--==Rating======-->
-                <div class="rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <!--==comments===-->
-                <p>Gbas Gbos!</p>
-            </div>
-        </div>
-    </section>
-    <!--client-section-end---------->
-   
-    <!--==Footer=============================================-->
+ 
     <footer>
         <div class="footer-container">
             <!--logo-container------>
