@@ -16,16 +16,17 @@
 
     #category {
         border: 3px solid #4eb060;
-        width: 20%;
+        width: 25%;
         height: 100%;
-        border-radius: 20px;
+        overflow-y: auto;
+        height: 500px;
     }
 
     #category ul {
         align-items: center;
         margin: auto;
         width: 100%;
-        padding: 30px;
+        padding: 20px;
     }
 
     #category li {
@@ -96,6 +97,12 @@
         transition: all ease 0.3s;
     }
 
+    .itemBoxButtons button:hover {
+        background-color: #4eb060;
+        color: white;
+        cursor: pointer;
+    }
+
     .product-box .track-btn:hover, .details-btn:hover{ 
         background-color: #4eb060;
         color: #ffffff;
@@ -140,50 +147,36 @@
         border: 3px solid lightgrey;
         width: 60%;
     }
+
+    .collapsible {
+        display: none;
+        padding-left: 20px;
+        background-color: #f1f1f1;
+        margin: 10px;
+        padding: 10px;
+
+        p {
+            margin: 10px;
+        }
+    }
     
 </style>
 <?php
     session_start();
+    include "getItems.php";
 ?>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <nav class="navigation">
-        <a href="index.php" class="logo">
-            <span>G</span>-United
-        </a>
-        
-        <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon">
-            <span class="nav-icon"></span>
-        </label>
-
-        <ul class="menu">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="Login.php">Login</a></li>
-            <li><a href="Register.php">Register</a></li>
-            <li><a href="Profile.php">Profile</a></li>
-            <li><a href="Logout.php">Logout</a></li>
-        </ul>
-
-        <div class="right-nav">
-            <a href="#" class="like">
-                <i class="far fa-heart"></i>
-                <span>0</span>
-            </a>
-
-            <a href="#" class="cart">
-                <i class="fas fa-shopping-cart"></i>
-                <span>0</span>
-            </a>
-        </div>
-    </nav>
+    <?php include 'navbar.php'; ?>
 
     <h1 id="pageTitle">Dashboard</h1>
     <section id="searchBar">
-        <form action="" class="search-box">
+        <form method="get" class="search-box">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search for your groceries" name="search" required>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search for your groceries" name="search">
             <input type="submit" class="search-btn" value="Search">
         </form>
     </section>
@@ -191,23 +184,54 @@
     <div id="dashboardContainer">
         <section id="category">
             <ul>
-                <li><a href="#"><h3>Category</h3> <i class='fas fa-angle-down'></i></a></li>
-                <li><a href="#"><h3>Brand</h3> <i class='fas fa-angle-down'></i></a></li>
-                <li><a href="#"><h3>Location</h3> <i class='fas fa-angle-down'></i></a></li>
-                <li><a href="#"><h3>Price</h3> <i class='fas fa-angle-down'></i></a></li>
+                <li>
+                    <a href="#"><h3>Category</h3> <i class='fas fa-angle-down'></i></a>
+                    <div class="collapsible" id=categoryCollapse>
+                        
+                    </div>
+                </li>
+                <li><a href="#"><h3>Brand</h3> <i class='fas fa-angle-down'></i></a>
+                    <div class="collapsible" id=brandCollapse>
+                    
+                    </div>
+                </li>
+                <li><a href="#"><h3>Location</h3> <i class='fas fa-angle-down'></i></a>
+                    <div class="collapsible" id=locationCollapse>
+                    
+                    </div>
+                </li>
+                <li><a href="#"><h3>Store</h3> <i class='fas fa-angle-down'></i></a>
+                    <div class="collapsible" id=storeCollapse>
+                    
+                    </div>
+                </li>
+                <li><a href="#"><h3>Price</h3> <i class='fas fa-angle-down'></i></a>
+                    <div class="collapsible" id=priceCollapse>
+                    
+                    </div>
+                </li>
             </ul>
         </section>
 
         <section id="items">
             <div id="dashBoardHeading">
                 <h3>All Groceries</h3>
-                <span>Filter <i class="fas fa-filter"></i></span>
+                <span>Sort By <i class="fas fa-filter"></i></span>
             </div>
     
-            <div id="products-container">
-            <?php
-                include "extensionScripts/getItems.php";
-            ?>
+            <div id="products-container" <?php 
+                if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == TRUE) {
+                echo 'class=loggedin';}
+                else {
+                echo 'class=';
+                }?>>
+                <?php
+                    if(!empty($search)){
+                        getItemByKeyword($search);
+                    }else {
+                        getAllItems();
+                    }
+                ?>
             </div>
         </section>
     </div>
@@ -217,8 +241,96 @@
         const searchParam = urlParams.get('search');
         var searchInput = document.getElementById("searchInput");
         searchInput.value = searchParam;
+    </script> 
+
+    <script>
+        $(document).ready(function() {
+            $('#category li a').click(function() {
+                var icon = $(this).find('i');
+                var content = $(this).next('.collapsible');
+                var searchInput = $('#searchInput').val().trim();
+                var id = content.attr('id');
+                var option = "";
+
+                if (icon.hasClass('fa-angle-down')) {
+                    if (content.html().trim() === '' && searchInput != "") {
+                        $.ajax({
+                            url: "scripts/phpJSAjax.php", 
+                            type: 'GET',
+                            data: {search: searchInput},
+                            success: function(response) {
+                                $.each(JSON.parse(response), function(key, value) {
+                                    if(id == 'categoryCollapse'){
+                                        option = value.category;
+                                        var radio = "<input type='checkbox' name='category' value='"+option+"'>"+option;
+                                        content.append('<p>'+radio+'</p>');
+                                    }else if(id == 'brandCollapse'){
+                                        option = value.itemName
+                                        var radio = "<input type='checkbox' name='itemName' value='"+option+"'>"+option;
+                                        content.append('<p>'+radio+'</p>');
+                                    }
+                                    else if(id == 'locationCollapse'){
+                                        option = value.town+', '+value.province;
+                                        var radio = "<input type='checkbox' name='town' value='"+option+"'>"+option;
+                                        content.append('<p>'+radio+'</p>');
+                                    }
+                                    else if(id == 'storeCollapse'){
+                                        option = value.storeName;
+                                        var radio = "<input type='checkbox' name='storeName' value='"+option+"'>"+option;
+                                        content.append('<p>'+radio+'</p>');
+                                    }
+                                });
+                                content.slideDown();
+                            }
+                        });
+                    }else {
+                        content.slideDown();
+                    }
+                    icon.removeClass('fa-angle-down').addClass('fa-angle-up');
+                } else {
+                    icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+                    content.slideUp();
+                }
+            });
+
+            $('#category .collapsible').on('change', 'input[type="checkbox"]', function() {
+                var selectedValues = [];
+                $('input[name="' + $(this).attr('name') + '"]:checked').each(function() {
+                    selectedValues.push($(this).val());
+                    console.log(selectedValues);
+                });
+                
+                if(selectedValues.length>0) {
+                    $.ajax({
+                        url: "scripts/phpJSAjax.php", 
+                        type: 'POST',
+                        data: {column: $(this).attr('name'), filterValues: selectedValues},
+                        success: function(response) {
+                            $('#products-container').empty();
+                            $.each(JSON.parse(response), function(key, value) {
+                                var imgsrc = value.imageLocation!=""? value.imageLocation:"./images/default.png";
+                                var productBox = "<div class='product-box'>";
+                                productBox += "<img src='" + imgsrc + "' alt='" + value.itemName + "'>";
+                                productBox += "<strong>" + value.itemName + "</strong>";
+                                productBox += "<span class='quantity'>1 KG</span>";
+                                productBox += "<span class='price'>$" + value.price + "</span>";
+                                productBox += "<div class='itemBoxButtons'>";
+                                productBox += "<button class='track-btn'>+ Track</button>";
+
+                                if ($("#products-container").attr("class")=="loggedin") {
+                                    productBox += "<button class='details-btn'>View Details</button>";
+                                }
+                                productBox += "</div><a href='#' class='like-btn'><i class='far fa-heart'></i></a></div>";
+
+                                $('#products-container').append(productBox);
+                            });
+                        }
+                    });
+                }else {
+                    location.reload();
+                }
+            });
+        });
     </script>
-   
-    
 </body>
 </html>

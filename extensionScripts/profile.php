@@ -14,8 +14,9 @@ function getUserName() {
     return $firstName;
 }
 
-function getProfileImage() {
+function getProfileDetails() {
     $profileImage = "";
+    $createdDate = "";
 
     try {
         global $connString;
@@ -23,13 +24,14 @@ function getProfileImage() {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         if(isset($_SESSION["loggedin"]) && isset($_SESSION["id"])){
-            $sql = "SELECT profileLocation FROM users WHERE id = ?";
+            $sql = "SELECT profileLocation, createdDate FROM users WHERE id = ?";
             $statement = $pdo -> prepare($sql);
             $statement -> execute([$_SESSION["id"]]);
 
             $row = $statement -> fetch();
             if($row){
                 $profileImage = $row['profileLocation'];
+                $createdDate = date('F Y', strtotime($row['createdDate']));
             }
         }
 
@@ -40,7 +42,7 @@ function getProfileImage() {
         $pdo = null;
     }
 
-    return $profileImage;
+    return array($profileImage, $createdDate);
 }
 
 

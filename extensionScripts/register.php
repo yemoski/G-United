@@ -61,7 +61,7 @@ try{
                 $image_err = "Only image types (JPG and PNG) are allowed.";
             }else {
                 $temp = $profilePicture['tmp_name'];
-                $destination = "./images/userImages/".$profilePicture['name'];
+                $destination = "./images/userImages/".$emailAddress.$profilePicture['name'];
                 $profileLocation = $destination;
 
                 if(!move_uploaded_file($temp, $destination)) {
@@ -86,12 +86,10 @@ try{
 
         if(empty($email_err) && empty($password_err) && empty($firstName_err) 
         && empty($lastName_err) && empty($usertype_err) && empty($image_err)) {
-
-
-            $sql = "INSERT INTO users(firstname, lastname, emailAddress, password, usertype, profileLocation) VALUES (?, ?, ?, ?, ?, ?)";
+            $current_date = date("Y-m-d");
+            $sql = "INSERT INTO users(firstname, lastname, emailAddress, password, usertype, profileLocation, createdDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
             $statement = $pdo -> prepare($sql);
-            $statement -> execute([$firstname, $lastname, $emailAddress, md5($confirmPassword), $usertype, $profileLocation]);
-
+            $statement -> execute([$firstname, $lastname, $emailAddress, md5($confirmPassword), $usertype, $profileLocation, $current_date]);
 
             $sql = "SELECT id FROM users WHERE emailAddress = ?";
             $statement = $pdo -> prepare($sql);

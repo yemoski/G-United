@@ -15,12 +15,41 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+<style>
+    .itemBoxButtons {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .itemBoxButtons button{
+        border: none;
+        width: 50%;
+        height: 40px;
+        background-color: #ecf7ee;
+        color: #4eb060;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        border-radius: 40px;
+        transition: all ease 0.3s;
+    }
+
+    .itemBoxButtons button:hover {
+        background-color: #4eb060;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<?php
+    include "getItems.php";
+?>
 </head>
 <body>
 
     <?php include 'navbar.php'; ?>
    
-
 
     <!--==Search-banner=======================================-->
     <section id="search-banner">
@@ -54,38 +83,38 @@
         <!--box-container---------->
         <div class="category-container">
             <!--box---------------->
-            <a href="#" class="category-box">
+            <a href="ItemDashboard.php?search=Seafood" class="category-box">
                 <img alt="Fish" src="images/fish.png">
-                <span>Fish & Meat</span>
+                <span>Seafood</span>
             </a>
             <!--box---------------->
-            <a href="#" class="category-box">
-                <img alt="Fish" src="images/Vegetables.png">
-                <span>Vegatbles</span>
+            <a href="ItemDashboard.php?search=Produce" class="category-box">
+                <img alt="Produce" src="images/Vegetables.png">
+                <span>Produce</span>
             </a>
             <!--box---------------->
-            <a href="#" class="category-box">
-                <img alt="Fish" src="images/medicine.png">
-                <span>Medicine</span>
+            <a href="ItemDashboard.php?search=Healthcare" class="category-box">
+                <img alt="Healthcare" src="images/medicine.png">
+                <span>Healthcare</span>
             </a>
             <!--box---------------->
-            <a href="#" class="category-box">
-                <img alt="Fish" src="images/baby.png">
+            <a href="ItemDashboard.php?search=Baby+Care" class="category-box">
+                <img alt="Baby" src="images/baby.png">
                 <span>Baby</span>
             </a>
             <!--box---------------->
-            <a href="#" class="category-box">
-                <img alt="Fish" src="images/office.png">
-                <span>Office</span>
+            <a href="ItemDashboard.php?search=Household+and+Cleaning+Supplies" class="category-box">
+                <img alt="Office" src="images/office.png">
+                <span>Household</span>
             </a>
             <!--box---------------->
-            <a href="#" class="category-box">
-                <img alt="Fish" src="images/beauty.png">
-                <span>Beauty</span>
+            <a href="ItemDashboard.php?search=Personal+Care" class="category-box">
+                <img alt="Beauty" src="images/beauty.png">
+                <span>Personal Care</span>
             </a>
             <!--box---------------->
-            <a href="#" class="category-box">
-                <img alt="Fish" src="images/Gardening.png">
+            <a href="ItemDashboard.php?search=Produce" class="category-box">
+                <img alt="Gardening" src="images/Gardening.png">
                 <span>Gardening</span>
             </a>
         </div>
@@ -96,101 +125,14 @@
     <section id="popular-product">
         <!--heading----------->
         <div class="product-heading">
-            <h3>Popular Product</h3>
-            <span>All</span>
+            <h3>Current Products</h3>
+            <span><a href="ItemDashboard.php" style="color:green;">All</a></span>
         </div>
         <!--box-container------>
         <div class="product-container">
-            <!--box---------->
-            <div class="product-box">
-                <img alt="apple" src="images/apple.png">
-                <strong>Apple</strong>
-                <span class="quantity">1 KG</span>
-                <span class="price">2$</span>
-                <!--cart-btn------->
-                <a href="#" class="cart-btn">
-                    <i class="fas fa-shopping-bag"></i> Add Cart
-                </a>
-                <!--like-btn------->
-                <a href="#" class="like-btn">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-            <!--box---------->
-            <div class="product-box">
-                <img alt="apple" src="images/chili.png">
-                <strong>Chili</strong>
-                <span class="quantity">1 KG</span>
-                <span class="price">3$</span>
-                <!--cart-btn------->
-                <a href="#" class="cart-btn">
-                    <i class="fas fa-shopping-bag"></i> Add Cart
-                </a>
-                <!--like-btn------->
-                <a href="#" class="like-btn">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-            <!--box---------->
-            <div class="product-box">
-                <img alt="apple" src="images/onion.png">
-                <strong>Onion</strong>
-                <span class="quantity">1 KG</span>
-                <span class="price">1$</span>
-                <!--cart-btn------->
-                <a href="#" class="cart-btn">
-                    <i class="fas fa-shopping-bag"></i> Add Cart
-                </a>
-                <!--like-btn------->
-                <a href="#" class="like-btn">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-            <!--box---------->
-            <div class="product-box">
-                <img alt="apple" src="images/patato.png">
-                <strong>Patato</strong>
-                <span class="quantity">1 KG</span>
-                <span class="price">2.2$</span>
-                <!--cart-btn------->
-                <a href="#" class="cart-btn">
-                    <i class="fas fa-shopping-bag"></i> Add Cart
-                </a>
-                <!--like-btn------->
-                <a href="#" class="like-btn">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-            <!--box---------->
-            <div class="product-box">
-                <img alt="apple" src="images/garlic.png">
-                <strong>Garlic</strong>
-                <span class="quantity">1 KG</span>
-                <span class="price">3$</span>
-                <!--cart-btn------->
-                <a href="#" class="cart-btn">
-                    <i class="fas fa-shopping-bag"></i> Add Cart
-                </a>
-                <!--like-btn------->
-                <a href="#" class="like-btn">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
-            <!--box---------->
-            <div class="product-box">
-                <img alt="apple" src="images/tamato.png">
-                <strong>Tamato</strong>
-                <span class="quantity">1 KG</span>
-                <span class="price">1.4$</span>
-                <!--cart-btn------->
-                <a href="#" class="cart-btn">
-                    <i class="fas fa-shopping-bag"></i> Add Cart
-                </a>
-                <!--like-btn------->
-                <a href="#" class="like-btn">
-                    <i class="far fa-heart"></i>
-                </a>
-            </div>
+            <?php
+                getCurrentItemsLimit6();
+            ?>
         </div>
     </section>
     <!--popular-product-end--------------------->
