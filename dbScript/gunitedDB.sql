@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2024 at 12:26 PM
+-- Generation Time: Mar 28, 2024 at 01:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -358,12 +358,11 @@ CREATE TABLE `products` (
   `town` text NOT NULL,
   `categoryid` int(11) NOT NULL,
   `storeid` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `imageLocation` text NOT NULL DEFAULT './images/default.png'
+  `price` decimal(7,2) NOT NULL,
+  `imageLocation` text NOT NULL,
+  `createdBy` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
@@ -428,7 +427,7 @@ ALTER TABLE `grocerystores`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
