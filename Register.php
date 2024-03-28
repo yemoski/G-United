@@ -247,38 +247,31 @@
             var emailRegex = /(.+)@([^\.].*)\.([a-z]{2,})/;
             var passReg = /^[a-zA-Z]\w{7,16}$/;
             
-            
-            
             if (firstname == "") {
-                alert("First name is required");
+                alert("First name is required.");
                 return false;
             } 
 
             if (lastname == "") {
-               alert( "Last name is required");
+               alert( "Last name is required.");
                 return false;
             } 
-
            
             if (!emailRegex.test(email)) {
-               alert("Invalid Email format");
+               alert("Invalid Email format.");
                 return false;
             } 
-
            
             if (password < 8) {
-                alert("Password must be at least 8 characters long");
+                alert("Password must be at least 8 characters long.");
                 return false;
             } 
-
 
             if (password !== confirmPassword) {
-                alert("Passwords do not match");
+                alert("Passwords do not match.");
                 return false;
             } 
-
             return true;
-
         }
     
     </script>

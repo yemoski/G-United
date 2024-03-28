@@ -2,8 +2,13 @@
 
 require_once "config.php";
 
+session_start();
+
 if (isset($_SESSION["loggedin"]) && isset($_SESSION["usertype"]) && strcasecmp("User", $_SESSION["usertype"]) == 0) {
     header("Location: Profile.php");
+    exit;
+}else if (!isset($_SESSION["loggedin"])) {
+    header("Location: Login.php");
     exit;
 }
 
@@ -69,11 +74,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if(empty($town)) {
-            $town = "Please enter a valid town name.";
+            $town_err = "Please enter a valid town name.";
         }
 
         if(empty(trim($store))) {
-            $store = "Please enter a store name.";
+            $store_err = "Please enter a store name.";
         }
 
         if(empty(trim($price))) {
@@ -90,7 +95,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $image_err = "Only image types (JPG and PNG) are allowed.";
             }else {
                 $temp = $itemImage['tmp_name'];
-                $destination = "./images/itemImages/".$itemImage['name'];
+                $destination = "./images/itemImages/".rand(1, 1000000).rand(1, 1000000).rand(1, 1000000)
+                .$itemImage['name'].rand(1, 1000000).rand(1, 1000000).rand(1, 1000000);
                 $imageLocation = $destination;
 
                 if(!move_uploaded_file($temp, $destination)) {
@@ -99,7 +105,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
-        if(empty($itemName_err) && empty($category_err) && empty($itemType_err) && empty($item_err) &&
+        if(isset($_SESSION["id"]) && empty($itemName_err) && empty($category_err) && empty($itemType_err) && empty($item_err) &&
         empty($province_err) && empty($town_err) && empty($store_err) && empty($price_err) && empty($image_err)) {
             $sql = "SELECT id from grocerycategories WHERE category = ? AND subcategory = ? AND item = ?";
             $statement = $pdo -> prepare($sql);
@@ -111,11 +117,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $statement -> execute([$store]);
             $storeid = $statement -> fetchColumn();
 
-            $sql = "INSERT INTO products(itemName, province, town, categoryid, storeid, price, imageLocation) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO products(itemName, province, town, categoryid, storeid, price, imageLocation, createdBy) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $statement = $pdo -> prepare($sql);
-            $statement -> execute([$itemName, $province, $town, $categoryid, $storeid, $price, $imageLocation]);
+            $statement -> execute([$itemName, $province, $town, $categoryid, $storeid, $price, $imageLocation, $_SESSION["id"]]);
 
-            header("Location: Profile.php");
+            header("Location: Profile.php?status=success!");
             $pdo = null;
             exit;
         }
