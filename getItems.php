@@ -2,6 +2,10 @@
 
 require_once "extensionScripts/config.php";
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $search = '';
 
 function getAllItems() {
@@ -10,7 +14,8 @@ function getAllItems() {
         $pdo = new PDO($connString, DB_USER, DB_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $sql = "SELECT * FROM products";
+        $sql = "SELECT * FROM products JOIN grocerycategories on products.categoryid = grocerycategories.id 
+        JOIN grocerystores ON storeid = grocerystores.id";
         $statement = $pdo -> prepare($sql);
         $statement -> execute();
     
@@ -44,7 +49,8 @@ function getCurrentItemsLimit6() {
         $pdo = new PDO($connString, DB_USER, DB_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-        $sql = "SELECT * FROM products ORDER BY RAND() LIMIT 6";
+        $sql = "SELECT * FROM products JOIN grocerycategories on products.categoryid = grocerycategories.id 
+        JOIN grocerystores ON storeid = grocerystores.id ORDER BY RAND() LIMIT 6";
         $statement = $pdo -> prepare($sql);
         $statement -> execute();
     
@@ -119,9 +125,9 @@ function getItemByCategory($category) {
         $pdo = new PDO($connString, DB_USER, DB_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-        $sql = "SELECT * FROM products WHERE category LIKE %$category%";
+        $sql = "SELECT * FROM products WHERE category LIKE ?";
         $statement = $pdo -> prepare($sql);
-        $statement -> execute();
+        $statement -> execute(['%'.$category.'%']);
     
         while ($row = $statement -> fetch()) {
             $imgsrc = (empty($row['imageLocation'])) ? "./images/default.png" : $row['imageLocation'];
@@ -144,6 +150,41 @@ function getItemByCategory($category) {
     }catch (PDOException $e){
         die( $e->getMessage());
     }    
-    
 }
+
+function getItemByCreated() {
+    global $connString;
+
+    try{
+        $pdo = new PDO($connString, DB_USER, DB_PASSWORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $sql = "SELECT * FROM products JOIN grocerycategories on products.categoryid = grocerycategories.id 
+        JOIN grocerystores ON storeid = grocerystores.id WHERE createdBy = ?";
+        $statement = $pdo -> prepare($sql);
+        $statement -> execute([$_SESSION["id"]]);
+
+        while ($row = $statement -> fetch()) {
+            $imgsrc = (empty($row['imageLocation'])) ? "./images/default.png" : $row['imageLocation'];
+            echo "
+                <div class='product-box'>
+                    <img src='".$imgsrc."'alt=".$row['itemName']."'>
+                    <strong>".$row['itemName']."</strong>
+                    <span class='quantity'>1 KG</span>
+                    <span class='price'>$".$row['price']."</span>
+                    <div class='itemBoxButtons'>
+                    <button class='track-btn'>+ Track</button>";
+            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == TRUE) {
+                echo "<button class='details-btn'>Edit Details</button>";
+            }
+                echo "</div><a href='#' class='like-btn'><i class='far fa-heart'></i></a></div>";
+        }
+
+    }catch (PDOException $e){
+        die( $e->getMessage());
+    }finally {
+        $pdo = null;
+    }
+}
+
 ?>

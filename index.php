@@ -262,28 +262,26 @@
         </div>
         </div>
     </footer>
-    <script>
 
-function updateProductContainer() {
-    var xhr = new XMLHttpRequest(); // Create a new XMLHttpRequest object
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                // Update the product container with the response
-                document.querySelector('.product-container').innerHTML = xhr.responseText;
-            } else {
-                // Handle errors
-                console.error('Error: ' + xhr.status);
+
+<script>
+    function updateProductContainer() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    document.querySelector('.product-container').innerHTML = xhr.responseText;
+                } else {
+                    console.error('Error: ' + xhr.status);
+                }
             }
-        }
-    };
-    xhr.open('GET', 'update_items.php', true); // Specify the request method and URL
-    xhr.send(); // Send the request
-}
+        };
+        xhr.open('GET', 'update_items.php', true); 
+        xhr.send();
+    }
 
-// Call the updateProductContainer function to fetch and update items initially
-updateProductContainer();
-setInterval(updateProductContainer, 155000);
-    </script>
+    updateProductContainer();
+    setInterval(updateProductContainer, 120000);
+</script>
 </body>
 </html>

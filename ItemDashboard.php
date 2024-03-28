@@ -250,7 +250,6 @@
                 var content = $(this).next('.collapsible');
                 var searchInput = $('#searchInput').val().trim();
                 var id = content.attr('id');
-                var option = "";
 
                 if (icon.hasClass('fa-angle-down')) {
                     if (content.html().trim() === '' && searchInput != "") {
@@ -259,25 +258,29 @@
                             type: 'GET',
                             data: {search: searchInput},
                             success: function(response) {
+                                let uniqueOptions = [];
                                 $.each(JSON.parse(response), function(key, value) {
+                                    var option = "";
+                                    var radio = "";
                                     if(id == 'categoryCollapse'){
                                         option = value.category;
-                                        var radio = "<input type='checkbox' name='category' value='"+option+"'>"+option;
-                                        content.append('<p>'+radio+'</p>');
+                                        radio = "<input type='checkbox' name='category' value='"+option+"'>"+option;
                                     }else if(id == 'brandCollapse'){
                                         option = value.itemName
                                         var radio = "<input type='checkbox' name='itemName' value='"+option+"'>"+option;
-                                        content.append('<p>'+radio+'</p>');
                                     }
                                     else if(id == 'locationCollapse'){
                                         option = value.town+', '+value.province;
-                                        var radio = "<input type='checkbox' name='town' value='"+option+"'>"+option;
-                                        content.append('<p>'+radio+'</p>');
+                                        var radio = "<input type='checkbox' name='location' value='"+option+"'>"+option;
                                     }
                                     else if(id == 'storeCollapse'){
                                         option = value.storeName;
                                         var radio = "<input type='checkbox' name='storeName' value='"+option+"'>"+option;
-                                        content.append('<p>'+radio+'</p>');
+                                    }
+
+                                    if (!uniqueOptions.includes(option)) {
+                                        uniqueOptions.push(option); 
+                                        content.append('<p>' + radio + '</p>');
                                     }
                                 });
                                 content.slideDown();
@@ -293,18 +296,31 @@
                 }
             });
 
-            $('#category .collapsible').on('change', 'input[type="checkbox"]', function() {
-                var selectedValues = [];
-                $('input[name="' + $(this).attr('name') + '"]:checked').each(function() {
-                    selectedValues.push($(this).val());
-                    console.log(selectedValues);
+            $('#category .collapsible').on('change', 'input[type="checkbox"]', function() {        
+                var selectedValuesMap = {};
+                $('input[type="checkbox"]:checked').each(function() {
+                    var columnName = $(this).attr('name');
+                    if(columnName == "location") {
+                        var newColumn = "town";
+                        var [townValue] = $(this).val().split(",");
+                        if (!selectedValuesMap[newColumn]) {
+                            selectedValuesMap[newColumn] = [];
+                        }
+                        selectedValuesMap[newColumn].push(townValue);
+                    }
+                    else {
+                        if (!selectedValuesMap[columnName]) {
+                            selectedValuesMap[columnName] = [];
+                        }
+                        selectedValuesMap[columnName].push($(this).val());
+                    }
+                    
                 });
                 
-                if(selectedValues.length>0) {
-                    $.ajax({
+                $.ajax({
                         url: "scripts/phpJSAjax.php", 
                         type: 'POST',
-                        data: {column: $(this).attr('name'), filterValues: selectedValues},
+                        data: {action: "filter", filterValuesMap: selectedValuesMap},
                         success: function(response) {
                             $('#products-container').empty();
                             $.each(JSON.parse(response), function(key, value) {
@@ -325,10 +341,7 @@
                                 $('#products-container').append(productBox);
                             });
                         }
-                    });
-                }else {
-                    location.reload();
-                }
+                });
             });
         });
     </script>

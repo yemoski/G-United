@@ -1,6 +1,7 @@
 <?php
 
 include "getItems.php";
+
 function getUpdatedItemsHTML() {
     ob_start();
     getCurrentItemsLimit6(); 

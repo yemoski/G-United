@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once "../../dbConfig.php";
 
 if(isset($_GET['category']) && isset($_GET['itemType'])) {
@@ -19,7 +21,7 @@ if(isset($_GET['category']) && isset($_GET['itemType'])) {
         echo $results;
         
         $pdo = null;
-    }catch (PDOException $e){
+    }catch (PDOException $e) {
         die( $e->getMessage());
     }
 } else if (isset($_GET['category'])) {
@@ -42,9 +44,7 @@ if(isset($_GET['category']) && isset($_GET['itemType'])) {
     }catch (PDOException $e){
         die( $e->getMessage());
     }
-}  
-
-if (isset($_GET['storeName'])) {
+}  else if (isset($_GET['storeName'])) {
     try{
         $pdo = new PDO($connString, DB_USER, DB_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -64,9 +64,7 @@ if (isset($_GET['storeName'])) {
     }catch (PDOException $e){
         die( $e->getMessage());
     }
-}  
-
-if (isset($_GET['search'])) {
+}  else if (isset($_GET['search'])) {
     try{
         $pdo = new PDO($connString, DB_USER, DB_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -101,32 +99,42 @@ if (isset($_GET['search'])) {
     }finally {
         $pdo = null;
     }
-}
-
-if(isset($_POST['filterValues']) && isset($_POST['column'])){
+} else if(isset($_POST['action']) && $_POST['action'] === "filter") {
+    $filterValuesMap = isset($_POST['filterValuesMap']) ? $_POST['filterValuesMap'] : [];
+    
     try{
         $pdo = new PDO($connString, DB_USER, DB_PASSWORD);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $results = "";
-        
-        $param = "'" . implode("', '", $_POST['filterValues']) . "'";
-        $column = $_POST['column'];
+        $whereConditions = array();
 
-        $sql = "SELECT * FROM products JOIN grocerycategories on products.categoryid = grocerycategories.id 
-        JOIN grocerystores ON storeid = grocerystores.id WHERE $column IN ($param)";
+        foreach ($filterValuesMap as $columnName => $selectedValues) {
+            if (!empty($selectedValues)) {
+                $param = "'" . implode("', '", $selectedValues) . "'";
+                $whereConditions[] = "$columnName IN ($param)";
+            }
+        }
+
+        if (!empty($filterValuesMap)) {
+            $whereClause = implode(' AND ', $whereConditions);
+            $sql = "SELECT * FROM products JOIN grocerycategories on products.categoryid = grocerycategories.id 
+            JOIN grocerystores ON storeid = grocerystores.id WHERE $whereClause";
+        } else {
+            $sql = "SELECT * FROM products JOIN grocerycategories on products.categoryid = grocerycategories.id 
+            JOIN grocerystores ON storeid = grocerystores.id";
+        }
+        
         $statement = $pdo -> prepare($sql);
         $statement -> execute();
-
         $rows_array = $statement->fetchAll(PDO::FETCH_ASSOC);
         $json_data = json_encode($rows_array);
-
+        
         echo $json_data;
     }catch (PDOException $e){
         die( $e->getMessage());
     }finally {
         $pdo = null;
     }
-}
+} 
 
 ?>

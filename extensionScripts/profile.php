@@ -9,6 +9,11 @@ if (!isset($_SESSION["loggedin"])) {
     exit;
 }
 
+if (isset($_GET['status'])) {
+    $status = $_GET['status'];
+    echo "<script>alert('$status');</script>";
+}
+
 function getUserName() {
     $firstName = $_SESSION['firstname'];
     return $firstName;
@@ -30,7 +35,7 @@ function getProfileDetails() {
 
             $row = $statement -> fetch();
             if($row){
-                $profileImage = $row['profileLocation'];
+                $profileImage = (empty($row['profileLocation'])) ? "./images/default.png" : $row['profileLocation'];
                 $createdDate = date('F Y', strtotime($row['createdDate']));
             }
         }

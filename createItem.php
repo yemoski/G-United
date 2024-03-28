@@ -78,39 +78,48 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
 <?php include 'navbar.php'; ?>
 <script>
     function validateForm() {
         var itemName = document.getElementById("itemName").value;
         var category = document.getElementById("itemCategory").value;
+        var itemType = document.getElementById("itemType").value;
+        var item = document.getElementById("item").value;
         var province = document.getElementById("province").value;
         var town = document.getElementById("town").value;
         var price = document.getElementById("price").value;
-        var image = document.getElementById("image").value;
+        var storeName = document.getElementById("store").value;
 
         if (itemName == "") {
-            alert("Item Name must be filled out");
+            alert("Error! Please enter the item name.");
             return false;
         }
         if (category == "") {
-            alert("Category must be selected");
+            alert("Error! Please select a category.");
+            return false;
+        }
+        if (itemType == "") {
+            alert("Error! Please select an item type.");
+            return false;
+        }
+        if (item == "") {
+            alert("Error! Please select an item.");
             return false;
         }
         if (province == "") {
-            alert("Province must be selected");
+            alert("Error! Please select a province.");
             return false;
         }
         if (town == "") {
-            alert("City must be filled out");
+            alert("Error! Please enter a city name.");
             return false;
         }
         if (price == "") {
-            alert("Price must be filled out");
+            alert("Error! Please enter an item price.");
             return false;
         }
-        if (image == "") {
-            alert("Image must be selected");
+        if (storeName == "") {
+            alert("Error! Please enter a store name.");
             return false;
         }
         return true;
@@ -127,28 +136,37 @@
                 }
             ?>
 
-            <?php
-                if (!empty($category_err)) {
-                    echo "<p id=\"categoryError\"style=\"color: red;\">$category_err</p>";
-                }
-            ?>
-
             <label for="category">Category:</label>
             <select id="itemCategory" name="category" required>
                 <?php
                     getCategories();
                 ?>
             </select>
+            <?php
+                if (!empty($category_err)) {
+                    echo "<p id=\"categoryError\"style=\"color: red;\">$category_err</p>";
+                }
+            ?>
 
             <label for="itemType">Item Type:</label>
             <select id="itemType" name="type" required>
                 
             </select>
+            <?php
+                if (!empty($itemType_err)) {
+                    echo "<p id=\"itemTypeError\"style=\"color: red;\">$itemType_err</p>";
+                }
+            ?>
 
             <label for="item">Item:</label>
             <select id="item" name="item" required>
                 
             </select>
+            <?php
+                if (!empty($item_err)) {
+                    echo "<p id=\"itemError\"style=\"color: red;\">$item_err</p>";
+                }
+            ?>
 
             <label for="province">Province:</label>
             <select id="province" name="province" required>
@@ -188,6 +206,11 @@
                 
                 </datalist>
             </div>
+            <?php
+                if (!empty($store_err)) {
+                    echo "<p id=\"storeError\"style=\"color: red;\">$store_err</p>";
+                }
+            ?>
 
             <label for="price">Price ($):</label>
             <input id="price" type="number" min="0.00" max="2000.00" step="0.01" id="price" name="price" required>
